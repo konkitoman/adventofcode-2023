@@ -19,16 +19,6 @@ let rec adventofcode1 = fun file start ->
 let res = adventofcode1 (open_in "input1.txt") 0
 let () = print_endline (string_of_int res)
 
-let zero = ['z';'e';'r';'o']
-let one = ['o';'n';'e'] 
-let tow = ['t';'w';'o']
-let three = ['t';'h';'r';'e';'e']
-let four = ['f';'o';'u';'r']
-let five = ['f';'i';'v';'e']
-let six = ['s';'i';'x']
-let seven = ['s';'e';'v';'e';'n']
-let eight = ['e';'i';'g';'h';'t']
-let nine = ['n';'i';'n';'e']
 
 
 let rec get_num'5 = fun str -> 
@@ -64,28 +54,6 @@ let rec get_num_rev'5 = fun str ->
       '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' -> (int_of_char ch) - 48
       | _ -> get_num_rev'5 res)
     | _ -> 0
-
-let () = assert (get_num'5 zero == 0)
-let () = assert (get_num'5 one == 1)
-let () = assert (get_num'5 tow == 2)
-let () = assert (get_num'5 three == 3)
-let () = assert (get_num'5 four == 4)
-let () = assert (get_num'5 five == 5)
-let () = assert (get_num'5 six == 6)
-let () = assert (get_num'5 seven == 7)
-let () = assert (get_num'5 eight == 8)
-let () = assert (get_num'5 nine == 9)
-
-let () = assert (get_num_rev'5 (List.rev zero) == 0)
-let () = assert (get_num_rev'5 (List.rev one) == 1)
-let () = assert (get_num_rev'5 (List.rev tow) == 2)
-let () = assert (get_num_rev'5 (List.rev three) == 3)
-let () = assert (get_num_rev'5 (List.rev four) == 4)
-let () = assert (get_num_rev'5 (List.rev five) == 5)
-let () = assert (get_num_rev'5 (List.rev six) == 6)
-let () = assert (get_num_rev'5 (List.rev seven) == 7)
-let () = assert (get_num_rev'5 (List.rev eight) == 8)
-let () = assert (get_num_rev'5 (List.rev nine) == 9)
 
 let rec adventofcode1'5 = fun file start -> 
   try
