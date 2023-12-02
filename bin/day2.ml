@@ -13,7 +13,8 @@ exception Cannot_Parse_Color;;
 
 let rec parse_num = fun str start -> match str
   with c :: res -> (match c 
-    with '0' -> parse_num res (start * 10)
+    with
+      '0' -> parse_num res (start * 10)
     | '1' -> parse_num res ((start * 10) + 1)
     | '2' -> parse_num res ((start * 10) + 2) 
     | '3' -> parse_num res ((start * 10) + 3) 
@@ -28,13 +29,15 @@ let rec parse_num = fun str start -> match str
 ;;
 
 let parse_color = fun str -> match str
-  with 'r' :: 'e' :: 'd' :: res -> Red, res
+  with
+    'r' :: 'e' :: 'd' :: res -> Red, res
   | 'g' :: 'r' :: 'e' :: 'e' :: 'n' :: res -> Green, res
   | 'b' :: 'l' :: 'u' :: 'e' :: res -> Blue, res
   | _ -> raise Cannot_Parse_Color
 
 let rec parse_colors = fun str r g b -> match str
-  with ' ' :: res -> parse_colors res r g b
+  with 
+    ' ' :: res -> parse_colors res r g b
   | ',' :: res -> parse_colors res r g b
   | c :: res -> (match c
     with '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' -> 
@@ -61,22 +64,28 @@ let parse = fun str -> match str
 
 let rec get_games = fun str l-> 
   try let res, game = parse str in 
-  get_games res (game :: l)
+    get_games res (game :: l)
   with End_of_file -> str, l
 
 let filter = fun games r g b -> List.filter (fun game -> game.r <= r && game.g <= g && game.b <= b ) games
 
-let rec sum = fun list start fn -> match list
-  with e :: res -> sum res (start + fn e) fn
+let rec carry = fun list start fn -> match list
+  with e :: res -> carry res (start + fn e) fn
   | [] -> start
 
-let games_sum = fun games -> sum games 0 (fun g -> g.game)
+let games_sum = fun games -> carry games 0 (fun g -> g.game)
 
 let run = fun games r g b -> 
   (Format.printf "Max r: %i, g: %i, b: %i\n" r g b);
   let games = filter games r g b in
   let sum = games_sum games in
   Format.printf "Sum: %i\n" sum
+
+let games_power = fun games -> carry games 0 (fun g -> g.r * g.g * g.b)
+
+let run'5 = fun games -> 
+  let sum = games_power games in
+  Format.printf "Sum'5: %i\n" sum
 
 let rec read_all = fun file str -> try read_all file (input_char file :: str) with End_of_file -> List.rev str
 
@@ -86,15 +95,4 @@ let file_data = read_file "input2.txt";;
 let _,games = get_games file_data [];;
 
 let () = run games 12 13 14
-
-
-
-let games_sum'5 = fun games -> sum games 0 (fun g -> g.r * g.g * g.b)
-
-let run'5 = fun games -> 
-  let sum = games_sum'5 games in
-  Format.printf "Sum'5: %i\n" sum
-
-let _,games = get_games file_data [];;
-
 let () = run'5 games
