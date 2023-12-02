@@ -13,3 +13,9 @@
  (name day1)
  (modules day1)
  (libraries adventofcode))
+
+(executable
+ (public_name day2)
+ (name day2)
+ (modules day2)
+ (libraries adventofcode))
