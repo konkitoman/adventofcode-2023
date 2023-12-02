@@ -57,7 +57,7 @@ let rec parse_colors = fun str r g b -> match str
   | [] -> raise End_of_file
 
 
-let parse = fun str -> match str 
+let parse = fun str -> match str
   with 'G' :: 'a' :: 'm' :: 'e' :: ' ' :: res -> 
     let num, res = parse_num res 0 in
     let res, r, g, b = parse_colors res 0 0 0 in
@@ -66,7 +66,7 @@ let parse = fun str -> match str
   | _ -> raise Cannot_Parse 
   ;;
 
-let rec get_games = fun str l -> 
+let rec get_games = fun str l-> 
   try let res, game = parse str in 
   get_games res (game :: l)
   with End_of_file -> str, l
@@ -103,4 +103,13 @@ let _,games = get_games file_data [];;
 
 let () = run games 12 13 14
 
+let games_sum'5 = fun games -> sum games 0 (fun g -> g.r * g.g * g.b)
 
+let run'5 = fun games -> 
+  print_games games;
+  let sum = games_sum'5 games in
+  Format.printf "Sum'5: %i\n" sum
+
+let _,games = get_games file_data [];;
+
+let () = run'5 games
