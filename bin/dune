@@ -1,4 +1,15 @@
+(env
+  (dev
+    (flags (:standard -warn-error -A))))
+
 (executable
- (public_name adventofcode)
+ (public_name test)
  (name main)
+ (modules main)
+ (libraries adventofcode))
+
+(executable
+ (public_name day1)
+ (name day1)
+ (modules day1)
  (libraries adventofcode))
